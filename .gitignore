@@ -17,3 +17,5 @@ venv/
 # Env files
 .env
 
+mindpath.db
+
