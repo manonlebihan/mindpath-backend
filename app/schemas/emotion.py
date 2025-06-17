@@ -9,6 +9,7 @@ class EmotionOut(BaseModel):
     id: int
     emotion: str
     note: str | None
+    intensity: int | None
     created_at: datetime
 
     class Config:

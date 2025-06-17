@@ -5,13 +5,16 @@ from app.schemas.emotion import EmotionCreate, EmotionOut
 from app.models.emotion import EmotionEntry
 from app.db import get_db
 from app.routes.auth import get_me  # fonction already define to get the user
+from app.ai.emotion_analysis import analyze_emotion
 
 router = APIRouter()
 
 @router.post("/emotions", response_model=EmotionOut)
 def create_emotion(entry: EmotionCreate, db: Session = Depends(get_db), user=Depends(get_me)):
+    result = analyze_emotion(entry.note or "")
     emotion = EmotionEntry(
-        emotion=entry.emotion,
+        emotion=result["emotion"],
+        intensity=result["intensity"],
         note=entry.note,
         user_id=user.id
     )

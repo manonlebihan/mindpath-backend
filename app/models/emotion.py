@@ -9,6 +9,7 @@ class EmotionEntry(Base):
     id = Column(Integer, primary_key=True, index=True)
     emotion = Column(String, nullable=False)
     note = Column(String)
+    intensity = Column(Integer)
     created_at = Column(DateTime, default=datetime.utcnow)
     user_id = Column(Integer, ForeignKey("users.id"))
 
