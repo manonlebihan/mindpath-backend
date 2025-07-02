@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.db import Base
+from app.models.emotion_tag import emotion_tags
 
 class EmotionEntry(Base):
     __tablename__ = "emotions"
@@ -14,3 +15,4 @@ class EmotionEntry(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="emotions")
+    tags = relationship("Tag", secondary=emotion_tags, back_populates="emotions")

@@ -10,3 +10,4 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
 
     emotions = relationship("EmotionEntry", back_populates="user")
+    tags = relationship("Tag", back_populates="user")
