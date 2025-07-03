@@ -16,7 +16,7 @@ def create_emotion(entry: EmotionCreate, db: Session = Depends(get_db), user=Dep
     tags = db.query(Tag).filter(Tag.id.in_(entry.tag_ids), Tag.user_id == user.id).all()
 
     emotion = EmotionEntry(
-        emotion=result["emotion"],
+        emotion=entry.emotion,
         intensity=result["intensity"],
         note=entry.note,
         user_id=user.id,
