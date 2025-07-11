@@ -30,3 +30,20 @@ def create_emotion(entry: EmotionCreate, db: Session = Depends(get_db), user=Dep
 @router.get("/emotions", response_model=List[EmotionOut])
 def list_emotions(db: Session = Depends(get_db), user=Depends(get_me)):
     return db.query(EmotionEntry).filter(EmotionEntry.user_id == user.id).order_by(EmotionEntry.created_at.desc()).all()
+
+@router.delete("/emotions/{emotion_id}", status_code=204)
+def delete_emotion(
+    emotion_id: int,
+    db: Session = Depends(get_db),
+    user=Depends(get_me)
+):
+    emotion = db.query(EmotionEntry).filter(
+        EmotionEntry.id == emotion_id,
+        EmotionEntry.user_id == user.id
+    ).first()
+
+    if not emotion:
+        raise HTTPException(status_code=404, detail="Émotion introuvable")
+
+    db.delete(emotion)
+    db.commit()
